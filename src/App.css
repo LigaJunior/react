@@ -2,6 +2,11 @@
   text-align: center;
 }
 
+.Card{
+  background-color: #282c34;
+  color: red;
+  justify-content: left;
+}
 
 .App-header {
   background-color: #282c34;

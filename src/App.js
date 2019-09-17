@@ -1,25 +1,32 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './App.css';
 import { Container, Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom'
-import { Button } from 'reactstrap';
-function App() {
-  return (
-    
-    <div className="App">
-      
-      <header className="App-header">
-        <Row>
-      <Link to="/">
-      <Button color="danger">🐑 SPRINT</Button>
-      </Link> 
-      <Link to="/sobre">
-      <Button color="danger">🐑 Sobre</Button>
-      </Link> 
-      </Row>
-      </header>
-    </div>
-  );
-}
+import axios from 'axios'
+import {
+  Card, CardImg, CardText, CardBody,
+  CardTitle, CardSubtitle, Button
+} from 'reactstrap';
 
-export default App;
+import Sprint from './Sprint'
+
+class App extends Component {
+  state = {
+    contacts: []
+  };
+
+  
+render(){
+  return(
+    <div className="App">
+      <header className="App-header">
+      <Sprint />
+      </header>
+      
+    </div>
+  )
+
+  
+}
+}
+export default App
