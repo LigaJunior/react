@@ -4,19 +4,9 @@ import axios from 'axios';
 
 export default class Sprint extends React.Component {
   state = {
-    sprint: []
+    contacts: []
   }
 
-  componentDidMount() {
-    axios.get(`http://localhost:8080/players`)
-      .then(res => {
-        const sprint = res.data;
-        this.setState({  
-            sprint: res.data
-        });
-
-      })
-  }
   
   
     
