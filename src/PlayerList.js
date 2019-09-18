@@ -23,7 +23,7 @@ export default class PlayerList extends Component {
     )
   }
 
-  componentWillMount() {
+  componentDidMount() {
     axios.get(`http://localhost:8080/players`)
       .then(res => {
         const player = res.data;
