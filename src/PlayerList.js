@@ -6,7 +6,7 @@ export default class PlayerList extends Component {
   constructor() {
     super()
   this.state = {
-    players: []
+    player: []
   }
 
 }
@@ -15,8 +15,9 @@ export default class PlayerList extends Component {
     return (
       <ul>      
       
-        { this.state.players.map(play => 
-          <li>{play.name}</li>)}
+        { this.state.player.map(play => 
+        
+          <li key={play.toString()}>ID:{play.id}NOME:{play.name} </li>)}
         
         
       </ul>
@@ -27,11 +28,9 @@ export default class PlayerList extends Component {
     axios.get(`http://localhost:8080/players`)
       .then(res => {
         const player = res.data;
-        if(player){
-        this.setState({ players: [player] });
-        console.log(res)
+        
+        this.setState({ player});
         console.log(player)
-        }
       })
   }
 
