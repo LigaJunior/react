@@ -1,0 +1,45 @@
+.player-card-content{
+    position: relative;
+    min-width: 200px;
+    min-height: 100px;
+}
+
+.player-card{
+    padding: 20px;
+    border-radius: 3px;
+    background-color: white;
+    box-shadow: 0px 10px 20px rgba(0,0,0,0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.player-img{ 
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+}
+
+.player-firstinfo{
+    display: flex;
+    flex-direction: row;  
+    z-index:2;
+    position: relative;
+}
+
+.player-profileinfo{
+    padding: 0px 20px;
+}
+
+.player-h3{ 
+    font-size: 1.6em;
+}
+.player-h4{
+    font-size: 1.2em;
+    font-style: italic;
+}
+p.bio{
+    padding: 10px 0px;
+    color: #5A5A5A;
+    line-height: 1.2;
+    font-style: initial;
+} 
