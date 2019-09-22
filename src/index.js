@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './Navbar/Navbar';
 ReactDOM.render(
     <BrowserRouter>
-    <Navbar/>
+        <Navbar />
         <Switch>
             <Route path="/" exact={true} component={App} />
         </Switch>

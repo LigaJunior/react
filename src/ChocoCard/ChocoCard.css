@@ -1,34 +1,15 @@
-.choco-card-content{
-    position: relative;
-    width: 200px;
+.choco-card{
+    min-width: 200px;
     height: 100px;
 }
 
-.choco-card{
+.choco-card-content{
     padding: 20px;
     border-radius: 3px;
     background-color: white;
     box-shadow: 0px 10px 20px rgba(0,0,0,0.2);
-    position: relative;
-    overflow: hidden;
 }
 
-.choco-img{ 
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-}
-
-.choco-firstinfo{
-    display: flex;
-    flex-direction: row;  
-    z-index:2;
-    position: relative;
-}
-
-.choco-profileinfo{
-    padding: 0px 20px;
-}
 
 .choco-h3{ 
     font-size: 1.4em;
@@ -37,9 +18,3 @@
     font-size: 1em;
     font-style: italic;
 }
-p.bio{
-    padding: 10px 0px;
-    color: #5A5A5A;
-    line-height: 1.2;
-    font-style: initial;
-} 
