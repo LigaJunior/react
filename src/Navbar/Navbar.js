@@ -12,33 +12,29 @@ const Navbar = () => (
                 <ul className="navbar-nav ml-auto">
                     <Dropdown title="Sprint"
                         itens={[{
-                            name: "Começar nova", action: () => {
-                                console.log("Começar nova sprint")
-                            }
+                            name: "Começar nova", target: "CreateNewSprintModal", toggle: "modal"
                         }]}
                         posDivider={[{
-                            name: "Ver todas as sprints", action: () => {
-                                console.log("Ver todas as sprints")
-                            }
+                            name: "Ver todas as sprints", href:"/sprints"
                         }]} />
-                    <Dropdown title="Players" itens={[{
-                        name: "Lista de players", action: () => {
-                            console.log("Lista de players")
-                        }
-                    }, {
-                        name: "Adicionar novo", action: () => {
-                            console.log("Adicionar novo player")
-                        }
-                    }]} />
-                    <Dropdown title="Porcarias" itens={[{
-                        name: "Lista de porcarias", action: () => {
-                            console.log("Lista de porcarias")
-                        }
-                    }, {
-                        name: "Adicionar nova", action: () => {
-                            console.log("Adicionar nova porcaria")
-                        }
-                    }]} />
+                    <Dropdown title="Players" 
+                        itens={[{
+                            name: "Adicionar novo", target: "CreateNewPlayerModal", toggle: "modal"
+                        }]}
+                        posDivider={[
+                            {
+                                name: "Ver todos os players", href:"#"
+                            }
+                        ]} />
+                    <Dropdown title="Porcarias" 
+                        itens={[{
+                            name: "Adicionar nova", target: "CreateNewJunkFoodModal", toggle: "modal"
+                        }]}
+                        posDivider={[
+                            {
+                                name: "Ver todas as porcarias", href:"#"
+                            }
+                        ]} />
                 </ul>
             </div>
         </div>

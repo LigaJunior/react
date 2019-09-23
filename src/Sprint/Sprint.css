@@ -1,0 +1,16 @@
+.sprint{
+    width: 100%;
+    height: 91vh;
+    background-color: white !important;
+    padding:50px;
+}
+
+.sprint-page-title{
+    border-left: 2px solid black;
+    padding-left: 15px;
+    margin-bottom: 50px;
+}
+
+div[data-test="datatable-select"] select{
+    margin-left: 0px !important;
+}

@@ -1,5 +1,5 @@
 import React from 'react'
-
+//jsxOptional covers any jsxComponent besides text input
 const Form = ({identifier,submitFunction,jsxOptional, inputs}) => (
     <form>
         {jsxOptional &&

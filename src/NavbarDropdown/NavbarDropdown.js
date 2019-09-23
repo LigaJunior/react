@@ -7,13 +7,13 @@ const NavbarDropdown = ({ title, itens, posDivider }) => (
         </button>
         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
             {itens.map((item, index) => (
-                <button key={index} className="dropdown-item" onClick={item.action}>{item.name}</button>
+                <button key={index} className="dropdown-item" data-toggle={item.toggle} data-target={"#"+item.target}>{item.name}</button>
             ))}
             {posDivider &&
                 [
                     <div key={'divider'} className="dropdown-divider"></div>,
                     posDivider.map((item, index) => (
-                        <button key={index} className="dropdown-item" onClick={item.action}>{item.name}</button>
+                        <a key={index} className="dropdown-item" href={item.href}>{item.name}</a>
                     ))
                 ]
             }

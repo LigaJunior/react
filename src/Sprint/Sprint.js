@@ -1,60 +1,72 @@
-import React from 'react';
 import axios from 'axios';
-import {
-  Card, CardFooter, CardHeader
-} from 'reactstrap';
+import React, { Component } from 'react';
+import { MDBDataTable } from 'mdbreact';
+import './Sprint.css';
 
-export default class Sprint extends React.Component {
-  state = {
-    sprint: [],
-    player: []
+class Sprint extends Component {
+
+  constructor() {
+    super()
+    this.state = {
+      sprintList: []
+    }
   }
-
-  
-  componentDidMount() {
-    axios.get(`http://localhost:8080/sprints/player-rank`)
-      .then(res => {
-        const sprint = res.data;
-        this.setState({ sprint })
-      })
-      axios.get(`http://localhost:8080/players`)
-      .then(res => {
-        const player = res.data;
-        this.setState({ player })
-      })
-  }
-
-  
 
   render() {
-    
-      let resultadoPlayer = []
-      this.state.player.map(player => resultadoPlayer.push({'name': player.name, 'id': player.id}))  
-      let resultadoSprint = []
-      this.state.sprint.map(sprint => resultadoSprint.push({'amount': sprint.amount, 'id': sprint.player}))
-      let vem = []
-        return(
-          <div>
-            <Card>
-            <CardHeader color="success" stats icon>
-            { this.state.sprint.map(sprint => <p>{sprint.amount} - {sprint.player}</p>)}           
-            </CardHeader>
-            <CardFooter stats>
-          
-            </CardFooter>
-            
-            
-          </Card>
-            <ul>
-          
-        </ul>
-        
-        </div>
-          
-            
-        )
+    const data = {
+      columns: [
+        {
+          label: 'Nome',
+          field: 'name',
+          sort: 'asc',
+          width: 150
+        },
+        {
+          label: 'Número',
+          field: 'sprintNumber',
+          sort: 'asc',
+          width: 270
+        },
+        {
+          label: 'Data de término',
+          field: 'endDate',
+          sort: 'asc',
+          width: 200
+        }
+      ], rows: this.state.sprintList
     }
-    
-    
+
+    return (
+      <div className='sprint'>
+        <div className="sprint-page-title">
+          <h3>Sprints</h3>
+          <p>Nessa página estão listadas todas as sprints já cadastradas.</p>
+        </div>
+        <MDBDataTable
+          responsive
+          searchLabel="Buscar"
+          entriesLabel="Linhas por página"
+          infoLabel={["Mostrando de", "até", "de", "registros"]}
+          paginationLabel={["Voltar", "Próxima"]}
+          className="sprint-table"
+          hover
+          data={data} />
+      </div>
+    );
   }
 
+  componentDidMount() {
+    axios.get(`http://localhost:8080/sprints`)
+      .then(res => {
+        var sprintList = new Array()
+        const source = res.data;
+        for (var i = 0; i < source.length; i++) {
+          sprintList[i]={name:source[i].name, sprintNumber:source[i].sprintNumber, endDate:source[i].endDate}
+        } 
+        console.log(res.data.id)
+        this.setState({ sprintList });
+      })
+  }
+}
+
+export default Sprint

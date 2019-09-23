@@ -41,8 +41,8 @@ export default class Choco extends Component {
                   axios.patch('http://localhost:8080/choco/pay/'+choco.id,{})
                     .then(res => {
                       // const choco = res.data;
-                      // this.setState({ choco });
-                      // console.log(choco)
+                      //this.setState({ choco });
+                      console.log(choco)
                       alert('A caixa foi paga.')
                     })
                 }}/>

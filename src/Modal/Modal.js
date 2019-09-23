@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Modal = ({ identifier, title, body, btnPrimary, btnSecondary }) => (
+const Modal = ({ identifier, title, body}) => (
     <div className="modal fade" id={identifier} tabIndex="-1" role="dialog" aria-labelledby={identifier + "Title"} aria-hidden="true">
         <div className="modal-dialog" role="document">
             <div className="modal-content">
@@ -19,13 +19,12 @@ const Modal = ({ identifier, title, body, btnPrimary, btnSecondary }) => (
 )
 
 Modal.defaultProps = {
+    title:"Novo modal",
     body: (
         <div className="modal-body">
             ...
         </div>
-    ),
-    btnPrimary: "Salvar",
-    btnSecondary: "Cancelar"
+    )
 }
 
 export default Modal
