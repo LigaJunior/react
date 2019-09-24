@@ -23,7 +23,7 @@ const Navbar = () => (
                         }]}
                         posDivider={[
                             {
-                                name: "Ver todos os players", href:"#"
+                                name: "Ver todos os players", href:"/players"
                             }
                         ]} />
                     <Dropdown title="Porcarias" 
@@ -32,7 +32,7 @@ const Navbar = () => (
                         }]}
                         posDivider={[
                             {
-                                name: "Ver todas as porcarias", href:"#"
+                                name: "Ver todas as porcarias", href:"/junk-foods"
                             }
                         ]} />
                 </ul>

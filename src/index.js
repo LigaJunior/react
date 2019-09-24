@@ -3,19 +3,23 @@ import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import App from './App/App';
-import Sprint from './Sprint/Sprint';
+import Sprints from './SprintTable/SprintTable';
+import Players from './PlayerTable/PlayerTable';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './Navbar/Navbar';
 import Modal from './Modal/Modal'
 import Form from './Form/Form';
 import Axios from 'axios';
+import JunkFoodTable from './JunkFoodTable/JunkFoodTable';
 ReactDOM.render(
     <BrowserRouter>
         <Navbar />
         <Switch>
             <Route path="/" exact={true} component={App} />
-            <Route path="/sprints" exact={true} component={Sprint} />
+            <Route path="/sprints" exact={true} component={Sprints} />
+            <Route path="/players" exact={true} component={Players} />
+            <Route path="/junk-foods" exact={true} component={JunkFoodTable} />
         </Switch>
         <Modal
             body={

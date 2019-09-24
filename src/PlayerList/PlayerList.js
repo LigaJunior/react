@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
-// import $ from 'jquery'
 import Modal from '../Modal/Modal'
 import Form from '../Form/Form'
 import ListHeader from '../ListHeader/ListHeader'
@@ -13,7 +11,8 @@ export default class PlayerList extends Component {
     this.state = {
       rankList: [],
       players: [],
-      activeSprint: []
+      activeSprint: [],
+      junkFoodList: [],
     }
   }
 
@@ -30,9 +29,43 @@ export default class PlayerList extends Component {
 
         <div className="collapse show" id="collapsePlayers">
           {this.state.rankList.map((rankPosition, index) =>
-            <PlayerCard key={index} name={rankPosition.player.name} level={rankPosition.amount} />
+            <PlayerCard key={index} name={rankPosition.player.name} level={rankPosition.amount} playerId={rankPosition.player.id}/>
           )}
         </div>
+        <Modal
+          body={
+            <Form
+              identifier="AddPlayerConsumptionForm"
+              jsxOptional={
+                <div key={"AddPlayerConsumptionFormOptionals"}>
+                  <input hidden id="AddPlayerConsumptionFormSelectedId"></input>
+                  <label style={{ display: "block" }}>Porcaria</label>
+                  <select id="AddPlayerConsumptionFormSelectJunkFood" className="form-control">
+                    {this.state.junkFoodList.map((junkfood, index) =>
+                      <option key={index} value={junkfood.id}>{junkfood.name}</option>
+                    )}
+                  </select>
+                  <label style={{ display: "block" }}>Quantidade</label>
+                  <div className="input-group">
+                      <input id="AddPlayerConsumptionFormInputAmount" type="number" min="1" placeholder="Digite aqui para o item quantidade" className="form-control" style={{ marginBottom: "15px" }} />
+                  </div>
+                </div>
+              }
+              submitFunction={()=>{
+                var amount = document.getElementById("AddPlayerConsumptionFormInputAmount").value
+                var foodId = document.getElementById("AddPlayerConsumptionFormSelectJunkFood").value
+                var sprintId = this.state.activeSprint[0].id;
+                var playerId = document.getElementById("AddPlayerConsumptionFormSelectedId").value
+                 axios.post('http://localhost:8080/consumption-history/',{ amount, junkfoodId:foodId, sprintId:sprintId, playerId:playerId })
+                 .then(res => {
+                   alert("Consumo associado.")
+                 })
+              }}
+            />
+          }
+          identifier="AddPlayerConsumptionModal"
+          title="Adicionar consumo"
+        />
         <Modal
           identifier="createPlayer"
           title="Adicionando Player"
@@ -81,6 +114,12 @@ export default class PlayerList extends Component {
         const activeSprint = res.data;
         this.setState({ activeSprint });
         console.log(activeSprint)
+      })
+    axios.get(`http://localhost:8080/junk-foods`)
+      .then(res => {
+        const junkFoodList = res.data;
+        this.setState({ junkFoodList });
+        console.log(junkFoodList)
       })
   }
 

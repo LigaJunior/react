@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { MDBDataTable } from 'mdbreact';
-import './Sprint.css';
+import './SprintTable.css';
+import TitleHeader from '../TitleHeader/TitleHeader';
+import Modal from '../Modal/Modal';
 
-class Sprint extends Component {
+class SprintTable extends Component {
 
   constructor() {
     super()
@@ -28,6 +30,12 @@ class Sprint extends Component {
           width: 270
         },
         {
+          label: 'Players',
+          field: 'players',
+          sort: 'asc',
+          width: 150
+        },
+        {
           label: 'Data de término',
           field: 'endDate',
           sort: 'asc',
@@ -37,11 +45,8 @@ class Sprint extends Component {
     }
 
     return (
-      <div className='sprint'>
-        <div className="sprint-page-title">
-          <h3>Sprints</h3>
-          <p>Nessa página estão listadas todas as sprints já cadastradas.</p>
-        </div>
+      <div className='sprints-page-body'>
+        <TitleHeader title="Sprints" subtitle="Nessa página estão listadas todas as sprints já cadastradas."/>
         <MDBDataTable
           responsive
           searchLabel="Buscar"
@@ -61,12 +66,25 @@ class Sprint extends Component {
         var sprintList = new Array()
         const source = res.data;
         for (var i = 0; i < source.length; i++) {
-          sprintList[i]={name:source[i].name, sprintNumber:source[i].sprintNumber, endDate:source[i].endDate}
+          sprintList[i]={
+            name:source[i].name, 
+            sprintNumber:source[i].sprintNumber, 
+            players:(<button id={source[i].id}
+            onClick={(e)=>{
+              const sprintId = e.target.id
+              console.log(sprintId)
+              axios.get('http://localhost:8080/sprints/'+sprintId)
+              .then(res =>{
+                console.log(res)
+              })
+            }}
+            className="btn btn-link text-primary">{source[i].players.length}</button>),
+            endDate:source[i].endDate,
+          }
         } 
-        console.log(res.data.id)
         this.setState({ sprintList });
       })
   }
 }
 
-export default Sprint
+export default SprintTable
