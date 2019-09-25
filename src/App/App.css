@@ -1,0 +1,11 @@
+.App {
+  color: #343a40;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: SaddleBrown !important;
+}
+.page-title{
+  border-bottom: 2px dashed #343a40;
+  padding-bottom: 10px;
+  border-bottom-width: 20%;
+}

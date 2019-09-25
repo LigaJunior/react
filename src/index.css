@@ -5,9 +5,23 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  height: 100vh;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+nav.black ul {
+  background: #000;
+}
+
+::-webkit-scrollbar { 
+  display: none; 
+}
+
+div[data-test="datatable-select"] select{
+  margin-left: 0px !important;
 }
