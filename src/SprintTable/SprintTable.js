@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { MDBDataTable } from 'mdbreact';
 import './SprintTable.css';
 import TitleHeader from '../TitleHeader/TitleHeader';
-import Modal from '../Modal/Modal';
 
 class SprintTable extends Component {
 
@@ -63,7 +62,7 @@ class SprintTable extends Component {
   componentDidMount() {
     axios.get(`http://localhost:8080/sprints`)
       .then(res => {
-        var sprintList = new Array()
+        var sprintList = []
         const source = res.data;
         for (var i = 0; i < source.length; i++) {
           sprintList[i]={

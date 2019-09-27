@@ -55,7 +55,7 @@ class JunkFoodTable extends Component {
   componentDidMount() {
     axios.get(`http://localhost:8080/junk-foods`)
       .then(res => {
-        var junkFoodList = new Array()
+        var junkFoodList = []
         const source = res.data;
         for (var i = 0; i < source.length; i++) {
             junkFoodList[i]={

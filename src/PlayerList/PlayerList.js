@@ -5,6 +5,9 @@ import Form from '../Form/Form'
 import ListHeader from '../ListHeader/ListHeader'
 import PlayerCard from '../PlayerCard/PlayerCard';
 import './PlayerList.css'
+import $ from 'jquery'
+import 'bootstrap'
+import { toast } from 'react-toastify';
 export default class PlayerList extends Component {
   constructor() {
     super()
@@ -15,7 +18,7 @@ export default class PlayerList extends Component {
       junkFoodList: [],
     }
   }
-
+  notify = (message) => toast(message);
   render() {
     return (
       <div>
@@ -28,9 +31,9 @@ export default class PlayerList extends Component {
           listDetails="Esta seção contem todos os participantes da sprint corrente rankeados por level." />
 
         <div className="collapse show" id="collapsePlayers">
-          {this.state.rankList.map((rankPosition, index) =>
-            <PlayerCard key={index} name={rankPosition.player.name} level={rankPosition.amount} playerId={rankPosition.player.id}/>
-          )}
+          {this.state.rankList.length > 0 ? this.state.rankList.map((rankPosition, index) =>
+            <PlayerCard key={index} name={rankPosition.player.name} level={rankPosition.amount} playerId={rankPosition.player.id} />
+          ) : (<div><label className="text-danger">Nenhum registro encontrado.</label></div>)}
         </div>
         <Modal
           body={
@@ -47,19 +50,26 @@ export default class PlayerList extends Component {
                   </select>
                   <label style={{ display: "block" }}>Quantidade</label>
                   <div className="input-group">
-                      <input id="AddPlayerConsumptionFormInputAmount" type="number" min="1" placeholder="Digite aqui para o item quantidade" className="form-control" style={{ marginBottom: "15px" }} />
+                    <input id="AddPlayerConsumptionFormInputAmount" type="number" min="1" placeholder="Digite aqui para o item quantidade" className="form-control" style={{ marginBottom: "15px" }} />
                   </div>
                 </div>
               }
-              submitFunction={()=>{
+              submitFunction={() => {
                 var amount = document.getElementById("AddPlayerConsumptionFormInputAmount").value
                 var foodId = document.getElementById("AddPlayerConsumptionFormSelectJunkFood").value
                 var sprintId = this.state.activeSprint[0].id;
                 var playerId = document.getElementById("AddPlayerConsumptionFormSelectedId").value
-                 axios.post('http://localhost:8080/consumption-history/',{ amount, junkfoodId:foodId, sprintId:sprintId, playerId:playerId })
-                 .then(res => {
-                   alert("Consumo associado.")
-                 })
+                axios.post('http://localhost:8080/consumption-history/', { amount, junkfoodId: foodId, sprintId: sprintId, playerId: playerId })
+                  .then(res => {
+                    axios.get(`http://localhost:8080/sprints/active/player-rank`)
+                      .then(res => {
+                        $("#AddPlayerConsumptionModal").modal('hide')
+                        const rankList = res.data;
+                        this.setState({ rankList });
+                        console.log(rankList)
+                        this.notify("Consumo atribuído.")
+                      })
+                  })
               }}
             />
           }
@@ -75,8 +85,14 @@ export default class PlayerList extends Component {
                 document.getElementById("formAddPlayerSelectPlayer").value + "/" +
                 this.state.activeSprint[0].id, {})
                 .then(res => {
-                  // $('#createPlayer').modal('show')
-                  alert("Player associado.")
+                  $('#createPlayer').modal('hide')
+                  axios.get(`http://localhost:8080/sprints/active/player-rank`)
+                    .then(res => {
+                      const rankList = res.data;
+                      this.setState({ rankList });
+                      console.log(rankList)
+                      this.notify("Player criado.")
+                    })
                 })
             }}
               identifier="formAddPlayer"

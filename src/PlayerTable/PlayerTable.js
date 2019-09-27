@@ -55,7 +55,7 @@ class PlayerTable extends Component {
   componentDidMount() {
     axios.get(`http://localhost:8080/players`)
       .then(res => {
-        var playerList = new Array()
+        var playerList = []
         const source = res.data;
         for (var i = 0; i < source.length; i++) {
             playerList[i]={name:source[i].name,
@@ -63,7 +63,11 @@ class PlayerTable extends Component {
                 actions:(
                     <div className="btn-group">
                         <button className="btn btn-primary">Editar</button>
-                        <button className="btn btn-secondary">Excluir</button>
+                        <button className="btn btn-secondary" id={source[i].id}
+                        onClick={(e)=>{
+                          console.log('http://localhost:8080/players/'+e.target.id)
+                          axios.delete('http://localhost:8080/players/'+e.target.id)
+                        }}>Excluir</button>
                     </div>
                 )
             }
