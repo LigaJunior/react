@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import './App.css';
 import PlayerList from '../PlayerList/PlayerList';
 import Choco from '../ChocoList/ChocoList';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+toast.configure()
 class App extends Component {
   render() {
     return (

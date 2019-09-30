@@ -12,6 +12,13 @@ import Modal from './Modal/Modal'
 import Form from './Form/Form';
 import Axios from 'axios';
 import JunkFoodTable from './JunkFoodTable/JunkFoodTable';
+import { toast } from 'react-toastify';
+import $ from 'jquery'
+import 'bootstrap'
+
+function notify(message) {
+    toast(message);
+}
 ReactDOM.render(
     <BrowserRouter>
         <Navbar />
@@ -53,7 +60,8 @@ ReactDOM.render(
                         console.log(data);
                         Axios.post('http://localhost:8080/sprints', data).then((res) => {
                             console.log(res)
-                            alert('Sprint iniciada.')
+                            $('#CreateNewSprintModal').modal("hide")
+                            notify('Sprint iniciada.')
                         })
                     }} />
             }
@@ -78,7 +86,8 @@ ReactDOM.render(
                         console.log(data);
                         Axios.post('http://localhost:8080/players', data).then((res) => {
                             console.log(res)
-                            alert('Player criado.')
+                            $('#CreateNewPlayerModal').modal("hide")
+                            notify('Player criado.')
                         })
                     }} />
             }
@@ -100,7 +109,8 @@ ReactDOM.render(
                         console.log(data);
                         Axios.post('http://localhost:8080/junk-foods', data).then((res) => {
                             console.log(res)
-                            alert('Porcaria cadastrada.')
+                            $('#CreateNewJunkFoodModal').modal("hide")
+                            notify('Porcaria cadastrada.')
                         })
                     }} />
             }
