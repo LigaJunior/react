@@ -9,7 +9,7 @@ class SprintTable extends Component {
   constructor() {
     super()
     this.state = {
-      sprintList: []
+      sprintList: [],
     }
   }
 
@@ -45,7 +45,7 @@ class SprintTable extends Component {
 
     return (
       <div className='sprints-page-body'>
-        <TitleHeader title="Sprints" subtitle="Nessa página estão listadas todas as sprints já cadastradas."/>
+        <TitleHeader title="Sprints" subtitle="Nessa página estão listadas todas as sprints já cadastradas." />
         <MDBDataTable
           responsive
           searchLabel="Buscar"
@@ -65,23 +65,28 @@ class SprintTable extends Component {
         var sprintList = []
         const source = res.data;
         for (var i = 0; i < source.length; i++) {
-          sprintList[i]={
-            name:source[i].name, 
-            sprintNumber:source[i].sprintNumber, 
-            players:(<button id={source[i].id}
-            onClick={(e)=>{
-              const sprintId = e.target.id
-              console.log(sprintId)
-              axios.get('http://localhost:8080/sprints/'+sprintId)
-              .then(res =>{
-                console.log(res)
-              })
-            }}
-            className="btn btn-link text-primary">{source[i].players.length}</button>),
-            endDate:source[i].endDate,
+          sprintList[i] = {
+            name: source[i].name,
+            sprintNumber: source[i].sprintNumber,
+            players: (
+              <button id={source[i].id}
+                onClick={this.sprintPlayerList}
+                className="btn btn-link text-primary">{source[i].players.length}
+              </button>
+            ),
+            endDate: source[i].endDate,
           }
-        } 
+        }
         this.setState({ sprintList });
+      })
+  }
+
+  sprintPlayerList = (e) => {
+    const sprintId = e.target.id
+    axios.get('http://localhost:8080/sprints/' + sprintId)
+      .then(res => {
+        var playerList = res.data[0].players
+        console.log(playerList)
       })
   }
 }

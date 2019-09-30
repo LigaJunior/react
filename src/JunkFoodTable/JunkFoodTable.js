@@ -28,12 +28,12 @@ class JunkFoodTable extends Component {
           sort: 'asc',
           width: 200
         },
-        {
-          label: 'Ações',
-          field: 'actions',
-          sort: 'asc',
-          width: 150
-        }
+        // {
+        //   label: 'Ações',
+        //   field: 'actions',
+        //   sort: 'asc',
+        //   width: 150
+        // }
       ], rows: this.state.junkFoodList
     }
 
@@ -59,14 +59,14 @@ class JunkFoodTable extends Component {
         const source = res.data;
         for (var i = 0; i < source.length; i++) {
             junkFoodList[i]={
-                name:source[i].name,
-                registrationDate:source[i].registrationDate,
-                actions:(
-                    <div className="btn-group">
-                        <button className="btn btn-primary">Editar</button>
-                        <button className="btn btn-secondary">Excluir</button>
-                    </div>
-                )
+              name:source[i].name,
+              registrationDate:source[i].registrationDate,
+              // actions:(
+              //   <div className="btn-group">
+              //     <button className="btn btn-primary">Editar</button>
+              //     <button className="btn btn-secondary">Excluir</button>
+              //   </div>
+              // )
             }
         }
         console.log(res.data)
