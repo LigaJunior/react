@@ -12,6 +12,15 @@ import Modal from './Modal/Modal'
 import Form from './Form/Form';
 import Axios from 'axios';
 import JunkFoodTable from './JunkFoodTable/JunkFoodTable';
+import { toast } from 'react-toastify';
+import $ from 'jquery'
+import 'bootstrap'
+import urlConfig from './url-config'
+
+const url = urlConfig.defaultURL
+function notify(message) {
+    toast(message);
+}
 ReactDOM.render(
     <BrowserRouter>
         <Navbar />
@@ -51,9 +60,10 @@ ReactDOM.render(
                             startDate, endDate, sprintNumber, name
                         }
                         console.log(data);
-                        Axios.post('http://localhost:8080/sprints', data).then((res) => {
+                        Axios.post(url+'/sprints', data).then((res) => {
                             console.log(res)
-                            alert('Sprint iniciada.')
+                            $('#CreateNewSprintModal').modal("hide")
+                            notify('Sprint iniciada.')
                         })
                     }} />
             }
@@ -76,9 +86,10 @@ ReactDOM.render(
                             name
                         }
                         console.log(data);
-                        Axios.post('http://localhost:8080/players', data).then((res) => {
+                        Axios.post(url+'/players', data).then((res) => {
                             console.log(res)
-                            alert('Player criado.')
+                            $('#CreateNewPlayerModal').modal("hide")
+                            notify('Player criado.')
                         })
                     }} />
             }
@@ -98,9 +109,10 @@ ReactDOM.render(
                             name
                         }
                         console.log(data);
-                        Axios.post('http://localhost:8080/junk-foods', data).then((res) => {
+                        Axios.post(url+'/junk-foods', data).then((res) => {
                             console.log(res)
-                            alert('Porcaria cadastrada.')
+                            $('#CreateNewJunkFoodModal').modal("hide")
+                            notify('Porcaria cadastrada.')
                         })
                     }} />
             }

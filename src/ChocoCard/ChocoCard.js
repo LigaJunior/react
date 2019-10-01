@@ -1,7 +1,7 @@
 import React from 'react'
 import './ChocoCard.css'
 
-const ChocoCard = ({payAction,id,playerName,reason, date,paid})=>(
+const ChocoCard = ({payAction,id,playerName,reason, date,paid}) => (
     <div className = "choco-card">
         <input readOnly hidden id={"choco"+id}></input>
         <div className="choco-card-content">

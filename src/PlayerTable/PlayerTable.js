@@ -3,7 +3,10 @@ import React, { Component } from 'react';
 import { MDBDataTable } from 'mdbreact';
 import './PlayerTable.css';
 import TitleHeader from '../TitleHeader/TitleHeader';
+import { toast } from 'react-toastify';
+import urlConfig from '../url-config'
 
+const url = urlConfig.defaultURL
 class PlayerTable extends Component {
 
   constructor() {
@@ -12,7 +15,7 @@ class PlayerTable extends Component {
       playerList: []
     }
   }
-
+  notify = (message) => toast(message);
   render() {
     const data = {
       columns: [
@@ -29,7 +32,7 @@ class PlayerTable extends Component {
           width: 270
         },
         {
-          label: 'Ações',
+          label: '',
           field: 'actions',
           sort: 'asc',
           width: 200
@@ -39,7 +42,7 @@ class PlayerTable extends Component {
 
     return (
       <div className='players-page-body'>
-        <TitleHeader title="Players" subtitle="Nessa página estão listadas todos os players já cadastrados."/>
+        <TitleHeader title="Players" subtitle="Nessa página estão listadas todos os players já cadastrados." />
         <MDBDataTable
           responsive
           searchLabel="Buscar"
@@ -53,22 +56,50 @@ class PlayerTable extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:8080/players`)
+    axios.get(url+'/players')
       .then(res => {
-        var playerList = new Array()
+        var playerList = []
         const source = res.data;
         for (var i = 0; i < source.length; i++) {
-            playerList[i]={name:source[i].name,
-                registrationDate:source[i].registrationDate,
-                actions:(
-                    <div className="btn-group">
-                        <button className="btn btn-primary">Editar</button>
-                        <button className="btn btn-secondary">Excluir</button>
-                    </div>
-                )
-            }
+          playerList[i] = {
+            name: source[i].name,
+            registrationDate: source[i].registrationDate,
+            actions: (
+              <div className="btn-group">
+                {/* <button className="btn btn-primary">Editar</button> */}
+                <button className="btn btn-link text-primary"
+                  id={source[i].id} onClick={this.removePlayer}> Excluir
+                </button>
+              </div>
+            )
+          }
         }
         this.setState({ playerList });
+      })
+  }
+
+  removePlayer = (e) => {
+    console.log(url+'/players/' + e.target.id)
+    axios.patch(url+'/players/' + e.target.id,{})
+      .then(res => {
+        var playerList = []
+        const source = res.data;
+        for (var i = 0; i < source.length; i++) {
+          playerList[i] = {
+            name: source[i].name,
+            registrationDate: source[i].registrationDate,
+            actions: (
+              <div className="btn-group">
+                {/* <button className="btn btn-primary">Editar</button> */}
+                <button className="btn btn-link text-primary"
+                  id={source[i].id} onClick={this.removePlayer}> Excluir
+                </button>
+              </div>
+            )
+          }
+        }
+        this.setState({ playerList });
+        this.notify("Player desligado.")
       })
   }
 }
