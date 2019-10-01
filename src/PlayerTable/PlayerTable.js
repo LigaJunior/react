@@ -4,7 +4,9 @@ import { MDBDataTable } from 'mdbreact';
 import './PlayerTable.css';
 import TitleHeader from '../TitleHeader/TitleHeader';
 import { toast } from 'react-toastify';
+import urlConfig from '../url-config'
 
+const url = urlConfig.defaultURL
 class PlayerTable extends Component {
 
   constructor() {
@@ -54,7 +56,7 @@ class PlayerTable extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:8080/players`)
+    axios.get(url+'/players')
       .then(res => {
         var playerList = []
         const source = res.data;
@@ -77,8 +79,8 @@ class PlayerTable extends Component {
   }
 
   removePlayer = (e) => {
-    console.log('http://localhost:8080/players/' + e.target.id)
-    axios.patch('http://localhost:8080/players/' + e.target.id,{})
+    console.log(url+'/players/' + e.target.id)
+    axios.patch(url+'/players/' + e.target.id,{})
       .then(res => {
         var playerList = []
         const source = res.data;

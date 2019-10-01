@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 import { MDBDataTable } from 'mdbreact';
 import './JunkFoodTable.css';
 import TitleHeader from '../TitleHeader/TitleHeader';
+import urlConfig from '../url-config'
 
+const url = urlConfig.defaultURL
 class JunkFoodTable extends Component {
 
   constructor() {
@@ -53,7 +55,7 @@ class JunkFoodTable extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:8080/junk-foods`)
+    axios.get(url+'/junk-foods')
       .then(res => {
         var junkFoodList = []
         const source = res.data;

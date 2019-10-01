@@ -8,7 +8,9 @@ import ListHeader from '../ListHeader/ListHeader';
 import $ from 'jquery'
 import 'bootstrap'
 import { toast } from 'react-toastify';
+import urlConfig from '../url-config'
 
+const url = urlConfig.defaultURL
 export default class Choco extends Component {
   constructor() {
     super()
@@ -40,9 +42,9 @@ export default class Choco extends Component {
                 date={choco.registrationDate}
                 paid={choco.paidOut}
                 payAction={() => {
-                  axios.patch('http://localhost:8080/choco/pay/' + choco.id, {})
+                  axios.patch(url+'/choco/pay/' + choco.id, {})
                     .then(() => {
-                      axios.get(`http://localhost:8080/choco`)
+                      axios.get(url+'/choco')
                         .then(res => {
                           const chocoList = res.data;
                           this.setState({ chocoList });
@@ -59,12 +61,12 @@ export default class Choco extends Component {
           title="Adicionando devedor"
           body={
             <Form submitFunction={() => {
-              axios.post('http://localhost:8080/choco', {
+              axios.post(url+'/choco', {
                 playerId: document.getElementById('formAddDebtorSelectPlayer').value,
                 reason: document.getElementById('formAddDebtorInputMotivo').value
               }).then(res => {
                 $('#createDevedor').modal('hide')
-                axios.get(`http://localhost:8080/choco`)
+                axios.get(url+'/choco')
                   .then(res => {
                     const chocoList = res.data;
                     this.setState({ chocoList });
@@ -91,14 +93,14 @@ export default class Choco extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:8080/choco`)
+    axios.get(url+'/choco')
       .then(res => {
         const chocoList = res.data;
 
         this.setState({ chocoList });
         console.log(chocoList)
       })
-    axios.get(`http://localhost:8080/players`)
+    axios.get(url+'/players')
       .then(res => {
         const players = res.data;
         this.setState({ players });

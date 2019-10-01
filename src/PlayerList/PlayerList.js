@@ -8,6 +8,9 @@ import './PlayerList.css'
 import $ from 'jquery'
 import 'bootstrap'
 import { toast } from 'react-toastify';
+import urlConfig from '../url-config'
+
+const url = urlConfig.defaultURL;
 export default class PlayerList extends Component {
   constructor() {
     super()
@@ -59,9 +62,9 @@ export default class PlayerList extends Component {
                 var foodId = document.getElementById("AddPlayerConsumptionFormSelectJunkFood").value
                 var sprintId = this.state.activeSprint[0].id;
                 var playerId = document.getElementById("AddPlayerConsumptionFormSelectedId").value
-                axios.post('http://localhost:8080/consumption-history/', { amount, junkfoodId: foodId, sprintId: sprintId, playerId: playerId })
+                axios.post(url+'/consumption-history/', { amount, junkfoodId: foodId, sprintId: sprintId, playerId: playerId })
                   .then(res => {
-                    axios.get(`http://localhost:8080/sprints/active/player-rank`)
+                    axios.get(url+'/sprints/active/player-rank')
                       .then(res => {
                         $("#AddPlayerConsumptionModal").modal('hide')
                         const rankList = res.data;
@@ -81,12 +84,12 @@ export default class PlayerList extends Component {
           title="Adicionando Player"
           body={
             <Form submitFunction={() => {
-              axios.patch('http://localhost:8080/sprints/' +
+              axios.patch(url+'/sprints/' +
                 document.getElementById("formAddPlayerSelectPlayer").value + "/" +
                 this.state.activeSprint[0].id, {})
                 .then(res => {
                   $('#createPlayer').modal('hide')
-                  axios.get(`http://localhost:8080/sprints/active/player-rank`)
+                  axios.get(url+'/sprints/active/player-rank')
                     .then(res => {
                       const rankList = res.data;
                       this.setState({ rankList });
@@ -112,26 +115,26 @@ export default class PlayerList extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:8080/sprints/active/player-rank`)
+    axios.get(url+'/sprints/active/player-rank')
       .then(res => {
         const rankList = res.data;
         this.setState({ rankList });
         console.log(rankList)
       })
 
-    axios.get(`http://localhost:8080/players/unallocated`)
+    axios.get(url+'/players/unallocated')
       .then(res => {
         const players = res.data;
         this.setState({ players });
         console.log(players)
       })
-    axios.get(`http://localhost:8080/sprints/active`)
+    axios.get(url+'/sprints/active')
       .then(res => {
         const activeSprint = res.data;
         this.setState({ activeSprint });
         console.log(activeSprint)
       })
-    axios.get(`http://localhost:8080/junk-foods`)
+    axios.get(url+'/junk-foods')
       .then(res => {
         const junkFoodList = res.data;
         this.setState({ junkFoodList });
