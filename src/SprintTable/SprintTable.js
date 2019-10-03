@@ -20,6 +20,7 @@ class SprintTable extends Component {
     super()
     this.state = {
       sprintList: [],
+      activeSprint: []
     }
   }
 
@@ -73,32 +74,55 @@ class SprintTable extends Component {
           hover
           data={data} />
         <Modal identifier="extendSprintDeadLineModal"
-        title="Prazo da sprint atual"
+          title="Prazo da sprint atual"
           body={
             <Form
               identifier="extendSprintDeadLineForm"
               jsxOptional={
                 <div key={"extendSprintFormOptionals"}>
-                    <label style={{ display: "block" }}>Nova Data de término</label>
-                    <div className="input-group date">
-                        <input id="extendSprintFormInputEndDate" type="date" className="form-control" style={{ marginBottom: "15px" }} />
-                    </div>
+                  <label style={{ display: "block" }}>Nova Data de término</label>
+                  <div className="input-group date">
+                    <input id="extendSprintFormInputEndDate" type="date" className="form-control" style={{ marginBottom: "5px" }} />
+                  </div>
+                  <small id="date-invalid-feedback" className="hidden">
+                    <label className="text-danger" style={{ marginBottom: "15px" }}>Data inválida!</label>
+                  </small>
                 </div>
               }
-              submitFunction={this.handleExtendSubmit}/>
+              submitFunction={this.handleExtendSubmit} />
           } />
       </div>
     );
   }
 
-  handleExtendSubmit = (e) =>{
+  handleExtendSubmit = (e) => {
     var newEndDate = document.getElementById('extendSprintFormInputEndDate').value;
-    console.log(newEndDate)
-    axios.patch(url+'/sprints/extend', {newDeadLine:newEndDate}).then((res) => {
-      console.log(res)
-      $('#extendSprintDeadLineModal').modal("hide")
-      notify('Novo deadline associado.')
-    })
+    if (new Date(newEndDate) <= new Date(this.state.activeSprint[0].endDate)) {
+      document.getElementById("date-invalid-feedback").classList.remove("hidden")
+    }
+    else {
+      document.getElementById("date-invalid-feedback").classList.add("hidden")
+      axios.patch(url + '/sprints/extend', { newDeadLine: newEndDate }).then((res) => {
+        console.log(res)
+        $('#extendSprintDeadLineModal').modal("hide")
+        notify('Novo deadline associado.')
+        axios.get(url + '/sprints/active')
+          .then(res => {
+            const activeSprint = res.data;
+            this.setState({ activeSprint });
+            console.log(activeSprint)
+          })
+      })
+    }
+  }
+
+  sprintPlayerList = (e) => {
+    const sprintId = e.target.id
+    axios.get(url + '/sprints/' + sprintId)
+      .then(res => {
+        var playerList = res.data[0].players
+        console.log(playerList)
+      })
   }
 
   componentDidMount() {
@@ -121,14 +145,12 @@ class SprintTable extends Component {
         }
         this.setState({ sprintList });
       })
-  }
 
-  sprintPlayerList = (e) => {
-    const sprintId = e.target.id
-    axios.get(url + '/sprints/' + sprintId)
+    axios.get(url + '/sprints/active')
       .then(res => {
-        var playerList = res.data[0].players
-        console.log(playerList)
+        const activeSprint = res.data;
+        this.setState({ activeSprint });
+        console.log(activeSprint)
       })
   }
 }

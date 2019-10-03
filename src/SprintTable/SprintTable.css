@@ -4,3 +4,7 @@
     background-color: white !important;
     padding:50px;
 }
+
+.hidden{
+    visibility: hidden;
+}
