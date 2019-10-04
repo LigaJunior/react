@@ -63,6 +63,7 @@ ReactDOM.render(
                         Axios.post(url+'/sprints', data).then((res) => {
                             console.log(res)
                             $('#CreateNewSprintModal').modal("hide")
+                            // this.forceUpdate()
                             notify('Sprint iniciada.')
                         })
                     }} />

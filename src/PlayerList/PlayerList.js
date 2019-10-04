@@ -62,7 +62,8 @@ export default class PlayerList extends Component {
                 var foodId = document.getElementById("AddPlayerConsumptionFormSelectJunkFood").value
                 var sprintId = this.state.activeSprint[0].id;
                 var playerId = document.getElementById("AddPlayerConsumptionFormSelectedId").value
-                axios.post(url+'/consumption-history/', { amount, junkfoodId: foodId, sprintId: sprintId, playerId: playerId })
+                console.log({ amount:parseInt(amount,10), junkfoodId: parseInt(foodId,10), sprintId: parseInt(sprintId,10), playerId: parseInt(playerId,10) })
+                axios.post(url+'/consumption-history/', { amount:parseInt(amount,10), junkfoodId: parseInt(foodId,10), sprintId: parseInt(sprintId,10), playerId: parseInt(playerId,10) })
                   .then(res => {
                     axios.get(url+'/sprints/active/player-rank')
                       .then(res => {
@@ -94,7 +95,7 @@ export default class PlayerList extends Component {
                       const rankList = res.data;
                       this.setState({ rankList });
                       console.log(rankList)
-                      this.notify("Player criado.")
+                      this.notify("Player associado.")
                     })
                 })
             }}
